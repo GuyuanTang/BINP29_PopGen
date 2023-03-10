@@ -7,13 +7,11 @@ The directory `/Data` contains the raw dataset `Eurasian_raw.xlsx` as well as th
   
 The `test_Eurasian.xlsx` contains only the needed columns for testing purpose, which are as the followings: Locality, Country, Lat.(latitude), Long.(longitude), Y_haplogroup, mt_group.
 
-### &nbsp;
 
 ### Data
 The raw data was named `Eurasian - Dataset_tims.xlsx`, which was downloaded from the BINP29 canvas page (https://canvas.education.lu.se/courses/22587/files/3514096?module_item_id=839243).  
 It was renamed to `Eurasian_raw.xlsx` for convenience.
 
-### &nbsp;
 
 ### Important Note
 To execute the program `clean_data.py`, the following packages/libraries should be installed to the environment in advance: `geopy` (v2.3.0) and `openpyxl` (v3.0.10).  
@@ -26,7 +24,6 @@ conda install geopy=2.3.0
 conda install openpyxl=3.0.10
 ```
 
-### &nbsp;
 
 ### Information on `clean_data.py`
 #### 1. Usage
