@@ -29,7 +29,7 @@ The program was designed specifically for this `Eurasian_raw.xlsx` dataset, and 
 
 ### Information on `clean_data.py`
 #### 1. Usage
-Open the working directory and type `python clean_data.py [input] [output]` in the terminal.  
+Open the working directory and type `python clean_data.py [input] [output]` in the terminal. The program only accepts excel file as the input.  
 
 For example:
 ```
