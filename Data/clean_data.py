@@ -5,19 +5,21 @@ Title: clean_data.py
 Date: 2023/03/08
 Author: Guyuan Tang
 
-Description: the code for preparing a test dataset suitable for the HaploMap.py to execute based on the original dataset Eurasian_tims.xlsx
+Description: the code for preparing a test dataset suitable for the HaploMap.py to execute based on the original dataset Eurasian_raw.xlsx
 
-List of packages/libraries:
+List of packages/libraries: pandas, numpy, geopy, sys
     
     
-List of functions:
+List of functions: No self-design function
     
+Steps: 
+    1) curate the missing values in Y and mtDNA columns; 
+    2) in mt_DNA column, some individuals are classified as the "haplogroup + mutation points" which means their subclades are unclear, consider them as missing value because we want accurate data to find the closest groups; 
+    3) make curation to individuals lacking longitude and latitude; 
+    4) export the dataframe to a new excel file.
     
-Steps: 1) curate the missing values in Y and mtDNA columns; 2) in mt_DNA column, some individuals are classified as the "haplogroup + mutation points" which means their subclades are unclear, consider them as missing value because we want accurate data to find the closest groups; 3) make curation to individuals lacking longitude and latitude; 4) export the dataframe to a new excel file.
-    
-    
-    
-Usage: python clean_data.py Eurasian*Dataset_tims.xlsx test_Eurasian.xlsx
+
+Usage: python clean_data.py Eurasian_raw.xlsx test_Eurasian.xlsx
 """
 
 import pandas as pd
