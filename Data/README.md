@@ -4,7 +4,7 @@ Author: Guyuan Tang
 
 ### Description
 The directory `/Data` contains the raw dataset `Eurasian_raw.xlsx` as well as the curated test dataset `test_Eurasian.xlsx` for testing our tool. The curation is finished by using the program `clean_data.py`.  
-  
+
 The `test_Eurasian.xlsx` contains only the needed columns for testing purpose, which are as the followings: Locality, Country, Lat.(latitude), Long.(longitude), Y_haplogroup, mt_group.
 
 
@@ -23,6 +23,8 @@ conda activate popgen
 conda install geopy=2.3.0
 conda install openpyxl=3.0.10
 ```
+
+The program was designed specifically for this `Eurasian_raw.xlsx` dataset, and it may not fit in with other datasets. But you could use it as a reference for preparing the dataset that are suitable as the input for our tool.
 
 
 ### Information on `clean_data.py`
