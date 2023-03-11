@@ -34,6 +34,7 @@ For example:
 ```
 python clean_SNP.py SNP_Index_raw.xlsx SNP_index_1.xlsx
 ```
+A warning may occur but it will not affect our desired output.
 #### 2. Script for the program
 The script could be found in the `clean_SNP.py` in the same directory.  
 The program removed the mutation that were unclear (most without the GRCh37 - Build 37 Number). And it also curated the mutation names that contained the "^^". 
