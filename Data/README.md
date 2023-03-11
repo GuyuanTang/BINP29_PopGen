@@ -21,7 +21,7 @@ They could be installed via `conda`:
 conda create -n popgen
 conda activate popgen
 conda install geopy=2.3.0
-conda install openpyxl=3.0.10
+conda install openpyxl=3.1.0
 ```
 
 The program was designed specifically for this `Eurasian_raw.xlsx` dataset, and it may not fit in with other datasets. But you could use it as a reference for preparing the dataset that are suitable as the input for our tool.
