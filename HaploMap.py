@@ -20,6 +20,7 @@ List of packages/libraries:
 List of functions:
     get_close(dict_data, haplogroup)
     map_plot(out_file, query_df, match_df, query, haplo_close)
+    haplo_freq(df, chr_name, country_name)
 
 Steps are described in each mode.    
 
@@ -47,7 +48,7 @@ import matplotlib.pyplot as plt
 import sys
 
 if len(sys.argv) == 2 and sys.argv[1] == '--help':
-    print("Example Usage: python HaploMap.py --mode [1/2/3] --input test_Eurasian.xlsx\n-Mode 1: input a haplogroup and search for the closest ones in the dataset and plot them on the map (it will search for 3 times at maximum)\nAnd follow the instruction on the screen to enter the chromosome (Y/mt) and the haplogroup name.\n\n-Mode 2: input a mutation name on Y-chromosome to get its haplogroup and relevant information, and plot the individuals (if any) on the map\nAnd follow the instruction on the screen to enter the mutation name.\n\n-Mode 3: input a country and chromosome to report its haplogroup frequency\nAnd follow the instruction on the screen to enter the country name.")
+    print("\nExample Usage: python HaploMap.py --mode [1/2/3] --input test_Eurasian.xlsx\n\n-Mode 1: input a haplogroup and search for the closest ones in the dataset and plot them on the map (it will search for 3 times at maximum)\nAnd follow the instruction on the screen to enter the chromosome (Y/mt) and the haplogroup name.\n\n-Mode 2: input a mutation name on Y-chromosome to get its haplogroup and relevant information, and plot the individuals (if any) on the map\nAnd follow the instruction on the screen to enter the mutation name.\n\n-Mode 3: input a country and chromosome to report its haplogroup frequency\nAnd follow the instruction on the screen to enter the country name.")
 
 elif len(sys.argv) == 5 and ('--mode' in sys.argv) and ('--input' in sys.argv):
     mode_loc = sys.argv.index('--mode')
@@ -273,7 +274,7 @@ Example usage:
         
         
         # For mtDNA
-        if chr_name.lower() == 'mt':
+        elif chr_name.lower() == 'mt':
             # Create a dictionary to contain full tree trunk on mtDNA
             # the naming rule for defining haplogroups on mtDNA is different in some subclades, and thus we store the information on the whole tree trunk
             mt_main = ["L1'2'3'4'5'6","L0","L2'3'4'5'6","L1","L2'3'4'6","L5","L3'4'6","L2","L3'4","L6","L3","L4","N","M","Q","CZ","C","Z","E","G","D","R","A","O","S","X","I","W","Y","P","U","J","T","HV","H","V","B4'5","B6","F","JT","K"]
@@ -567,17 +568,18 @@ Example usage:
             except FileNotFoundError as not_found:
                 print("The file {} was not found!".format(not_found.filename))
 
-
+        else:
+            print("Please enter a correct chromosome! Y or mt!")
 
 
         """
 2. The second function: input a mutation name, search for its subgroup and plot on the map (only available for Y-DNA now).
 
 Steps:
-    
-
-
-
+    1) Read the SNP_index.xlsx as the reference database. Check if the user's input is within the index.
+    2) If the mutation is found in the index, extract its subgroup, build 37 number, build 28 number and mutation information from the database.
+    3) Read the test_Eurasian.xlsx dataset, seach for the individuals belonging to the subgroup found in step 2.
+    4) Plot the individuals on the map.
 
 Example usage: 
     -for Y-DNA: python HaploMap.py --mode 2 --input test_Eurasian.xlsx 
@@ -667,31 +669,98 @@ Example usage:
 3. The third function: input a country, calculate the main haplogroup frequency.
 
 Steps:
-    
-
-
-
+    1) Define a function haplo_freq() to select the individuals from the selected country in the dataframe, extract their main haplogroups, and store the information into a group_list for easier calculation. The group_list was turned to a set group_uniq to remove repeated groups. The calculation of the frequency was then performed based on the group_set and group_list.
+    2) Seperate the output information based on the chromosome chosed by the user.
 
 Example usage: 
-    -for Y-DNA: python HaploMap.py --mode 2 --input test_Eurasian.xlsx 
-        Please enter the mutation name: V1023
+    -for Y-DNA: python HaploMap.py --mode 3 --input test_Eurasian.xlsx 
+        Please select the chrmosome (Y/mt): Y
+        Please select a country to discover: China
+    
+    -for mt-DNA: python HaploMap.py --mode 3 --input test_Eurasian.xlsx 
+        Please select the chrmosome (Y/mt): mt
+        Please select a country to discover: China
 
         """       
         
         
         
     elif mode == '3':
+        chr_name = input("Please select the chromosome (Y/mt):")
         country_name = input("Please select a country to discover:")
         
         
+        def haplo_freq(df, chr_name, country_name):
+            individual = df[df["Country"]==country_name].index.tolist()
+            chr_col = chr_name + "_haplogroup"
+            match_df = df.loc[individual,['Country', chr_col]]
+            match_df = match_df.dropna(axis=0, subset=[chr_col])
+            
+            # create a new column to contain the main haplogroup
+            match_df["Main"] = np.nan
+            
+            # extract the indice 
+            match_index = match_df.index.tolist()
+            
+            # enter the main haplogroup for each individual
+            for i in match_index:
+                chr_group = match_df.loc[i, chr_col]
+                match_df.loc[i, "Main"] = re.findall("^[A-Z]+", chr_group)[0]
+            
+            # extract the groups
+            group_list = match_df["Main"].tolist()
+            group_uniq = set(group_list)
+            total_pop = len(group_list)
+            
+            # calculate and print the results to the output file
+            out_file = country_name + "." + chr_name + ".txt"
+            with open(out_file, 'w') as out_file:
+                for group in group_uniq:
+                    count = group_list.count(group)
+                    freq = count / total_pop * 100
+                    freq = round(freq, 2) # keep two decimals
+                    print("{}: {} ({})".format(group, count, freq), file=out_file)
+                print("total individuals (with {}-DNA information): {}".format(chr_name, total_pop), file=out_file)
+            
+            
+        try:
+            haplo_df = pd.read_excel(in_file, header=0)
+            
+            # check if the input for country is correct.
+            if (haplo_df["Country"].eq(country_name)).any():
+                
+                # for Y-DNA
+                if chr_name.upper() == "Y":
+                    chr_name = "Y"
+                    print("\nCalculating haplogroup frequency on Y-chromosome in {}...".format(country_name))
+                    haplo_freq(haplo_df, chr_name, country_name)
+                    print("\nThank you for using HaploMap! Your report is available in the working directory.")
+                
+                # for mt_DNA
+                elif chr_name.lower() == "mt":
+                    chr_name = "mt"
+                    print("\nCalculating haplogroup frequency on mt-DNA in {}...".format(country_name))
+                    haplo_freq(haplo_df, chr_name, country_name)
+                    print("\nThank you for using HaploMap! Your report is available in the working directory.")
+                
+                else:
+                    raise TypeError
+                    
+            else:
+                print("The country is not included in the {} dataset. Please check the coutry name!".format(in_file))
         
+        
+        except TypeError:
+            print("Please enter a right chromosome (Y/mt)! Or enter --help to check the usage!")
+        
+        
+        except FileNotFoundError as not_found:
+            print("The file {} was not found!".format(not_found.filename))
         
         
     else:
         print("Please select the correct mode! Enter --help to check the usage!")
         
 
-
 else:
     print("Argument missing! Please enter '--help' to check the usage!")
-
