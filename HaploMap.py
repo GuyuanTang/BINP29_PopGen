@@ -54,8 +54,7 @@ elif len(sys.argv) == 5 and ('--mode' in sys.argv) and ('--input' in sys.argv):
     input_loc = sys.argv.index('--input')
     mode = sys.argv[mode_loc+1]
     in_file = sys.argv[input_loc+1]
-
-
+    
 
     """
 1. The first and the main function: input a haplogroup, search for its closest ones and plot them on the map.
@@ -83,7 +82,7 @@ Example usage:
         Please select the chromosome(Y/mt): mt 
         Enter the haplogroup: U5a1a1a
 
-    """
+        """
 
     if mode == '1':
         chr_name = input("Please select the chromosome (Y/mt):")
@@ -105,8 +104,8 @@ Example usage:
             ax.yaxis.label.set_visible(False)
             world.plot(ax=ax)
             if not query_df.empty: # only plot the query individuals if there is any
-                query_df.plot(ax=ax, marker='o', color='black', s=2, x="Long.", y="Lat.", kind="scatter", label=query)
-            match_df.plot(ax=ax, marker='o', color='red', s=2, x="Long.", y="Lat.", kind="scatter", label=haplo_close)
+                query_df.plot(ax=ax, marker='o', color='black', s=3.5, x="Long.", y="Lat.", kind="scatter", label=query)
+            match_df.plot(ax=ax, marker='o', color='red', s=3.5, x="Long.", y="Lat.", kind="scatter", label=haplo_close)
             plt.legend(bbox_to_anchor=(1.0,1.0), loc=2)
             plt.savefig(out_file, format="pdf", bbox_inches='tight')
         
@@ -164,9 +163,11 @@ Example usage:
                             if individual:
                                 n = num
                                 match_df = haplo_df.iloc[individual]
+                                individual_count = len(match_df)
+                                print("Found {} individual(s) in the haplogroup {}".format(individual_count,haplo_close))
                                 
                                 # create the output file name
-                                out_file = haplo_close + ".pdf"
+                                out_file = "Y_" + haplo_close + ".pdf"
                                 
                                 # plot the results on the map
                                 map_plot(out_file, query_df, match_df, query, haplo_close)
@@ -195,21 +196,25 @@ Example usage:
                                     print("The closest group {} is found!".format(haplo_close_0))
                                     individual = haplo_df[haplo_df["Y_haplogroup"]==haplo_close_0].index.tolist()
                                     match_df = haplo_df.iloc[individual]
+                                    individual_count = len(match_df)
+                                    print("Found {} individual(s) in the haplogroup {}".format(individual_count,haplo_close_0))
                                     # create the output file name
-                                    out_file = haplo_close_0 + ".pdf"
+                                    out_file = "Y_" + haplo_close_0 + ".pdf"
                                     # plot the results on the map
                                     map_plot(out_file, query_df, match_df, query, haplo_close_0)
-                                    print("\nThank you for using HaploMap! The graph has printed to your working directory.")
+                                    print("\nThank you for using HaploMap! The graph has been printed to your working directory.")
                                 
                                 elif (haplo_df['Y_haplogroup'].eq(haplo_close_1)).any():
                                     print("The closest group {} is found!".format(haplo_close_1))
                                     individual = haplo_df[haplo_df["Y_haplogroup"]==haplo_close_1].index.tolist()
                                     match_df = haplo_df.iloc[individual]
+                                    individual_count = len(match_df)
+                                    print("Found {} individual(s) in the haplogroup {}".format(individual_count,haplo_close_1))
                                     # create the output file name
-                                    out_file = haplo_close_1 + ".pdf"
+                                    out_file = "Y_" + haplo_close_1 + ".pdf"
                                     # plot the results on the map
                                     map_plot(out_file, query_df, match_df, query, haplo_close_1)
-                                    print("\nThank you for using HaploMap! The graph has printed to your working directory.")
+                                    print("\nThank you for using HaploMap! The graph has been printed to your working directory.")
                             # do not have match to the closest haplogroup
                             else:
                                 n += 1
@@ -230,21 +235,25 @@ Example usage:
                                     print("The closest haplogroup {} is found!".format(haplo_close_0))
                                     individual = haplo_df[haplo_df["Y_haplogroup"]==haplo_close_0].index.tolist()
                                     match_df = haplo_df.iloc[individual]
+                                    individual_count = len(match_df)
+                                    print("Found {} individual(s) in the haplogroup {}".format(individual_count,haplo_close_0))
                                     # create the output file name
-                                    out_file = haplo_close_0 + ".pdf"
+                                    out_file = "Y_" + haplo_close_0 + ".pdf"
                                     # plot the results on the map
                                     map_plot(out_file, query_df, match_df, query, haplo_close_0)
-                                    print("\nThank you for using HaploMap! The graph has printed to your working directory.")
+                                    print("\nThank you for using HaploMap! The graph has been printed to your working directory.")
                                 
                                 elif (haplo_df['Y_haplogroup'].eq(haplo_close_1)).any():
                                     print("The closest haplogroup {} is found!".format(haplo_close_1))
                                     individual = haplo_df[haplo_df["Y_haplogroup"]==haplo_close_1].index.tolist()
                                     match_df = haplo_df.iloc[individual]
+                                    individual_count = len(match_df)
+                                    print("Found {} individual(s) in the haplogroup {}".format(individual_count,haplo_close_1))
                                     # create the output file name
-                                    out_file = haplo_close_1 + ".pdf"
+                                    out_file = "Y_" + haplo_close_1 + ".pdf"
                                     # plot the results on the map
                                     map_plot(out_file, query_df, match_df, query, haplo_close_1)
-                                    print("\nThank you for using HaploMap! The graph has printed to your working directory.")
+                                    print("\nThank you for using HaploMap! The graph has been printed to your working directory.")
                             # do not have match to the closest haplogroup
                             else:
                                 n += 1
@@ -345,7 +354,7 @@ Example usage:
              "R9":["R9b","R9c","F"], "R9b":["R9b1","R9b2"], "R9b1":["R9b1a","R9b1b"], "R9b1a":["R9b1a1","R9b1a2","R9b1a3"], "R9b1a1":["R9b1a1a"], "R9b1a2":["R9b1a2a","R9b1a2b"], "R9c":["R9c1"], "R9c1":["R9c1a","R9c1b"], "R9c1a":["R9c1a1","R9c1a2","R9c1a3"], "R9c1b":["R9c1b1","R9c1b2"],
              "R11'B6":["R11","B6"], "R11":["R11a","R11b"], "R11b":["R11b1"], "R11b1":["R11b1a","R11b1b"], "R24":["R24a"], "R12'21":["R12","R21"], "R30":["R30a","R30b"], "R30a":["R30a1"], "R30a1":["R30a1a","R30a1b","R30a1c"], "R30a1b":["R30a1b1"], "R30b":["R30b1","R30b2"], "R30b2":["R30b2a"], "R31":["R31a","R31b"], "R31a":["R31a1"]}
 
-            mt_tree_W = {"W":["W1","W3","W4","W5","W6","W7","W8","W9"], "W3":["W3a","W3b"], "W3a":["W3a1","W3a2"], "W3a1":["W3a1a","W3a1b","W3a1c","W3a1d"], "W3a1a":["W3a1a1","W3a1a2","W3a1a3"], "W3b":["W3b1"], "W4":["W4a","W4b","W4c","W4d"], "W4a":["W4a1"], "W5":["W5a","W5b"], "W5a":["W5a1","W5a2"], "W5a1":["W5a1a"], "W5a1a":["W5a1a1"], "W5a1a1":["W5a1a1a"], "W5a2":["W5a2b"], "W5b":["W5b1"], "W5b1":["W5b1a"], "W6":["W6a","W6b","W6c","W6d"], "W6b":["W6b1"], "W6c":["W6c1"], "W6c1":["W6c1a"]}
+            mt_tree_W = {"W":["W1","W3","W4","W5","W6","W7","W8","W9"], "W1":["W1a","W1b","W1c","W1i","W1d","W1e","W1f","W1g","W1h"], "W1b":["W1b1"], "W1c":["W1c1"], "W1e":["W1e1"], "W1e1":["W1e1a"], "W1h":["W1h1"],"W3":["W3a","W3b"], "W3a":["W3a1","W3a2"], "W3a1":["W3a1a","W3a1b","W3a1c","W3a1d"], "W3a1a":["W3a1a1","W3a1a2","W3a1a3"], "W3b":["W3b1"], "W4":["W4a","W4b","W4c","W4d"], "W4a":["W4a1"], "W5":["W5a","W5b"], "W5a":["W5a1","W5a2"], "W5a1":["W5a1a"], "W5a1a":["W5a1a1"], "W5a1a1":["W5a1a1a"], "W5a2":["W5a2b"], "W5b":["W5b1"], "W5b1":["W5b1a"], "W6":["W6a","W6b","W6c","W6d"], "W6b":["W6b1"], "W6c":["W6c1"], "W6c1":["W6c1a"]}
 
             mt_tree_Y = {"Y":["Y1","Y2"]}
 
@@ -419,13 +428,15 @@ Example usage:
                             if individual:
                                 n = num
                                 match_df = haplo_df.iloc[individual]
+                                individual_count = len(match_df)
+                                print("Found {} individual(s) in the haplogroup {}".format(individual_count,haplo_close))
                                 
                                 # create the output file name
-                                out_file = haplo_close + ".pdf"
+                                out_file = "mt_" + haplo_close + ".pdf"
                                 
                                 # plot the results on the map
                                 map_plot(out_file, query_df, match_df, query, haplo_close)
-                                print("\nThank you for using HaploMap! The graph has printed to your working directory.")
+                                print("\nThank you for using HaploMap! The graph has been printed to your working directory.")
                                 
                             else: # there isn't any individual in the closest group
                                 n += 1
@@ -528,13 +539,15 @@ Example usage:
                         if individual:
                             n = num
                             match_df = haplo_df.iloc[individual]
+                            individual_count = len(match_df)
+                            print("Found {} individual(s) in the haplogroup {}".format(individual_count,haplo_close))
                             
                             # create the output file name
-                            out_file = haplo_close + ".pdf"
+                            out_file = "mt_" + haplo_close + ".pdf"
                             
                             # plot the results on the map
                             map_plot(out_file, query_df, match_df, query, haplo_close)
-                            print("\nThank you for using HaploMap! The graph has printed to your working directory.")
+                            print("\nThank you for using HaploMap! The graph has been printed to your working directory.")
                             
                         else: # there isn't any individual in the closest group
                             n += 1
@@ -544,6 +557,8 @@ Example usage:
                             else:
                                 print('\nThank you for using HaploMap! We only search for the top {} closest haplogroups. No matched individuals!'.format(num))
             
+            except TypeError:
+                print('TypeError: The input is not a defined haplogroup on mtDNA. Please check again!')
             
             except IndexError:
                 print("The haplogroup input was in wrong format! Please check again!")
@@ -552,21 +567,131 @@ Example usage:
             except FileNotFoundError as not_found:
                 print("The file {} was not found!".format(not_found.filename))
 
-else:
-    print("Argument missing! Please enter '--help' to check the usage!")
 
 
 
-
-    """
+        """
 2. The second function: input a mutation name, search for its subgroup and plot on the map (only available for Y-DNA now).
+
+Steps:
+    
+
+
+
 
 Example usage: 
     -for Y-DNA: python HaploMap.py --mode 2 --input test_Eurasian.xlsx 
         Please enter the mutation name: V1023
 
-    """
+        """
+    
+    elif mode == '2':
+        mut_name = input("Please enter the mutation name (Y-DNA):")
+        
+        # read the SNP_index file as a reference database
+        SNP_dir = sys.argv[0][:-11] # by default, it will locate at the same directory as the HaploMap.py
+        SNP_file = SNP_dir + 'SNP_index.xlsx'
+        SNP_df = pd.read_excel(SNP_file, header=0, index_col=0)
+        
+        try:
+            
+            # to check if the mutation is included in the SNP_index
+            if mut_name in SNP_df.index.values:
+                # extract the haplogroup from the SNP_index
+                haplogroup = SNP_df.loc[mut_name,'Subgroup Name']
+                build37 = str(SNP_df.loc[mut_name, 'Build 37 Number']) # the original class would be int
+                build38 = str(SNP_df.loc[mut_name, 'Build 38 Number']) # the original class would be int, and some missing value would be a float
+                mut_info = str(SNP_df.loc[mut_name, 'Mutation Info']) # for some missing value, it would be a float
+                
+                # to adjust the output text for some missing values
+                if build38 == 'nan':
+                    build38 = "None"
+                if mut_info == 'nan':
+                    mut_info = "Not specified"
+                # print the information to the screen to announce the user
+                print("\nQuery mutation name: {}\nHaplogroup Name: {}\nGRCh37 (Build 37 number): {}\nGRCh38 (Build 38 number): {}\nMutation information: {}\n\nNow searching for the individuals in the {} dataset...".format(mut_name, haplogroup, build37, build38, mut_info, in_file))
+                
+                # read the dataset
+                haplo_df = pd.read_excel(in_file, header=0)
+                # create a match_df dataframe to extract the individuals belong to the haplogroup
+                match_df = haplo_df.loc[haplo_df['Y_haplogroup'] == haplogroup]
+                individual_count = len(match_df)
+                print("\nFound {} individual(s) in the {} dataset.".format(individual_count, in_file))
+                
+                # specify the output report's file name
+                out_report = mut_name + '.report.txt'
+                
+                # if at least one individual were found in the haplogroup
+                if individual_count>0:
+                    # specify the output plot's file name
+                    out_plot = mut_name + '.pdf'
+                    
+                    # plot the individuals on the map
+                    world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
+                    fig,ax=plt.subplots()
+                    ax.set_aspect('equal')
+                    ax.xaxis.label.set_visible(False)
+                    ax.yaxis.label.set_visible(False)
+                    world.plot(ax=ax)
+                    match_df.plot(ax=ax, marker='o', color='red', s=3.5, x="Long.", y="Lat.", kind="scatter", label=haplogroup)
+                    plt.legend(bbox_to_anchor=(1.0,1.0), loc=2)
+                    plt.savefig(out_plot, format="pdf", bbox_inches='tight')
+                    
+                    # print the results to the report
+                    with open(out_report, 'w') as out_report:
+                        print("\nQuery mutation name: {}\nHaplogroup Name: {}\nGRCh37 (Build 37 number): {}\nGRCh38 (Build 38 number): {}\nMutation information: {}\n".format(mut_name, haplogroup, build37, build38, mut_info), file = out_report)
+                        print("Found {} individual(s) in the {} dataset.".format(individual_count, in_file), file = out_report)
+                    print("\nThank you for using HaploMap! Your results are available in the working directory.")
+                
+                else:
+                    # only print the report without a map
+                    with open(out_report, 'w') as out_report:
+                        print("\nQuery mutation name: {}\nHaplogroup Name: {}\nGRCh37 (Build 37 number): {}\nGRCh38 (Build 38 number): {}\nMutation information: {}\n".format(mut_name, haplogroup, build37, build38, mut_info), file = out_report)
+                        print("Found {} individual(s) in the {} dataset.".format(individual_count, in_file), file = out_report)
+                    print("\nThank you for using HaploMap! Your report is available in the working directory.")
+                
+                
+            else:
+                print("Please check the input of the mutation again! It is not included in the SNP_index.\nIt may due to the wrong mutation name or it was not a mutation mark to define a subgroup.")
+            
+
+
+        except FileNotFoundError as not_found:
+            print("The file {} was not found!".format(not_found.filename))
 
 
 
+        
+        
+        """
+3. The third function: input a country, calculate the main haplogroup frequency.
+
+Steps:
+    
+
+
+
+
+Example usage: 
+    -for Y-DNA: python HaploMap.py --mode 2 --input test_Eurasian.xlsx 
+        Please enter the mutation name: V1023
+
+        """       
+        
+        
+        
+    elif mode == '3':
+        country_name = input("Please select a country to discover:")
+        
+        
+        
+        
+        
+    else:
+        print("Please select the correct mode! Enter --help to check the usage!")
+        
+
+
+else:
+    print("Argument missing! Please enter '--help' to check the usage!")
 
