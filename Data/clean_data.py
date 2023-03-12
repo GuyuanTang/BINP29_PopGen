@@ -71,4 +71,4 @@ for i in noLLindex:
         df.loc[i,'Lat.'] = location.latitude
 
 # print the dataset into a new excel file
-df.to_excel(out_file)
+df.to_excel(out_file, index=False)
