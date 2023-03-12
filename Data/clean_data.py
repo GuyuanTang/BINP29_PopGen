@@ -8,12 +8,14 @@ Author: Guyuan Tang
 Description: the code for preparing a test dataset suitable for the HaploMap.py to execute based on the original dataset Eurasian_tims.xlsx
 
 List of packages/libraries:
+    pandas, numpy, geopy, sys
     
     
 List of functions:
+    No self-created function.
     
     
-Steps: 1) curate the missing values in Y and mtDNA columns; 2) in mt_DNA column, some individuals are classified as the "haplogroup + mutation points" which means their subclades are unclear, consider them as missing value because we want accurate data to find the closest groups; 3) make curation to individuals lacking longitude and latitude; 4) export the dataframe to a new excel file.
+Steps: 1) curate the missing values in Y and mtDNA columns; 2) in mt_DNA column, some individuals are classified as the "haplogroup + mutation points" which means their subclades are unclear, consider them as missing value because we want accurate data to find the closest groups; 3) correct the format of column "Country" (some may have one or more spaces at the end) and make curation to individuals lacking longitude and latitude; 4) export the dataframe to a new excel file.
     
     
     
@@ -53,6 +55,9 @@ df['mt_haplogroup'].replace(r"¬†","", regex=True, inplace=True)
 df['mt_haplogroup'].replace(r"'$","", regex=True, inplace=True)
 df['mt_haplogroup'].replace(r"\.\.","", regex=True, inplace=True)
 
+
+# curate the format of Country, some may have a space at the end
+df['Country'].replace(r"\s+$","", regex=True, inplace=True)
 
 # curate the longitude and latitude for individuals lacking the information
 geolocator = Nominatim(user_agent="MyApp")
