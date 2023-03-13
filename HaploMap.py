@@ -719,7 +719,7 @@ Example usage:
                     count = group_list.count(group)
                     freq = count / total_pop * 100
                     freq = round(freq, 2) # keep two decimals
-                    print("{}: {} ({})".format(group, count, freq), file=out_file)
+                    print("{}: {} ({}%)".format(group, count, freq), file=out_file)
                 print("total individuals (with {}-DNA information): {}".format(chr_name, total_pop), file=out_file)
             
             
@@ -753,14 +753,12 @@ Example usage:
         except TypeError:
             print("Please enter a right chromosome (Y/mt)! Or enter --help to check the usage!")
         
-        
         except FileNotFoundError as not_found:
             print("The file {} was not found!".format(not_found.filename))
         
-        
+    
     else:
         print("Please select the correct mode! Enter --help to check the usage!")
         
-
 else:
     print("Argument missing! Please enter '--help' to check the usage!")
