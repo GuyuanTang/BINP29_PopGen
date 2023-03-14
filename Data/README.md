@@ -14,7 +14,7 @@ It was renamed to `Eurasian_raw.xlsx` for convenience.
 
 
 ### Important Note!
-To execute the program `clean_data.py`, the following packages/libraries should be installed to the environment in advance: `geopy` (v2.3.0) and `openpyxl` (v3.1.0).  
+To execute the program `clean_data.py`, the following packages/libraries should be installed to the environment in advance: `geopy` and `openpyxl` (v3.1.0).  
 They could be installed via `conda`:  
 (we suggest to create a new conda environment for better execution)
 ```shell
