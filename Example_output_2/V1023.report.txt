@@ -1,7 +1,8 @@
+
 Query mutation name: V1023
 Haplogroup Name: C1a2a1
 GRCh37 (Build 37 number): 2717985
 GRCh38 (Build 38 number): 2849944
 Mutation information: C->G
 
-Found 1 individual(s) in the ../Data/test_Eurasian.xlsx dataset.
+Found 1 individual(s) in the E:\1Lund_Lectures\BINP29_DNA_Sequencing2\PopGen\Project\BINP29_PopGen\Data\test_Eurasian.xlsx dataset.
