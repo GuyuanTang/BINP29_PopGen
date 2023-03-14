@@ -19,7 +19,7 @@ List of packages/libraries:
     
 List of functions:
     get_close(dict_data, haplogroup)
-    map_plot(out_file, query_df, match_df, query, haplo_close)
+    map_plot(out_file, haplo_df, query_df, match_df, query, haplo_close)
     haplo_freq(df, chr_name, country_name)
 
 Steps are described in each mode.    
@@ -90,6 +90,15 @@ Example usage:
         haplo_name = input("Enter the haplogroup:")
         num = 3
         
+        
+        # define a color list for plotting
+        intervals = ['1001-2000 CE', '1-1000 CE', '1000-1 BCE', '2000-1001 BCE', '3000-2001 BCE', '4000-3001 BCE', '5000-4001 BCE', '6000-5001 BCE', '7000-6001 BCE', '8000-7001 BCE', '9000-8001 BCE', '10000-9001 BCE', '11000-10001 BCE']
+        color_list = ['lightcoral','brown','red','darkorange','gold','yellowgreen','limegreen','blue','violet','fuchsia','darkorchid','yellow','cyan']
+        colors = {}
+        for i in range(len(intervals)):
+            key = intervals[i]
+            colors[key] = color_list[i]
+        
         # define a function to get the closest haplogroup
         def get_close(dict_data, haplogroup):
             for k,v in dict_data.items():
@@ -97,18 +106,27 @@ Example usage:
                     return k
         
         # define a function for plotting on map
-        def map_plot(out_file, query_df, match_df, query, haplo_close):
+        def map_plot(out_file, query_df, match_df, query, haplo_close, colors):
+            # start plotting
             world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
-            fig,ax=plt.subplots()
+            fig,ax=plt.subplots(dpi=600)
             ax.set_aspect('equal')
             ax.xaxis.label.set_visible(False)
             ax.yaxis.label.set_visible(False)
-            world.plot(ax=ax)
+            world.plot(ax=ax, color = 'lightgrey', edgecolor = 'darkgrey', linewidth = 0.5)
             if not query_df.empty: # only plot the query individuals if there is any
-                query_df.plot(ax=ax, marker='o', color='black', s=3.5, x="Long.", y="Lat.", kind="scatter", label=query)
-            match_df.plot(ax=ax, marker='o', color='red', s=3.5, x="Long.", y="Lat.", kind="scatter", label=haplo_close)
-            plt.legend(bbox_to_anchor=(1.0,1.0), loc=2)
+                grouped_query = query_df.groupby('Age_interval')
+                for key, group in grouped_query:
+                    label_name = query + " (" + key + ")"
+                    group.plot(ax=ax, kind='scatter', x='Long.', y='Lat.', s=3.5, label=label_name, color=colors[key], marker = '^')
+            # plot the individuals from the closest haplogroup
+            grouped = match_df.groupby('Age_interval')
+            for key, group in grouped:
+                label_name = haplo_close + " (" + key + ")"
+                group.plot(ax=ax, kind='scatter', x='Long.', y='Lat.', s=3.5, label=label_name, color=colors[key])
+            plt.legend(bbox_to_anchor=(1.0,1.0), loc=2, fontsize=8)
             plt.savefig(out_file, format="pdf", bbox_inches='tight')
+        
         
         # For Y-DNA
         if chr_name.lower() == 'y':
@@ -171,7 +189,7 @@ Example usage:
                                 out_file = "Y_" + haplo_close + ".pdf"
                                 
                                 # plot the results on the map
-                                map_plot(out_file, query_df, match_df, query, haplo_close)
+                                map_plot(out_file, query_df, match_df, query, haplo_close, colors)
                                 print("\nThank you for using HaploMap! The graph has printed to your working directory.")
                                 
                             else: # there isn't any individual in the closest group
@@ -202,7 +220,7 @@ Example usage:
                                     # create the output file name
                                     out_file = "Y_" + haplo_close_0 + ".pdf"
                                     # plot the results on the map
-                                    map_plot(out_file, query_df, match_df, query, haplo_close_0)
+                                    map_plot(out_file, query_df, match_df, query, haplo_close_0, colors)
                                     print("\nThank you for using HaploMap! The graph has been printed to your working directory.")
                                 
                                 elif (haplo_df['Y_haplogroup'].eq(haplo_close_1)).any():
@@ -214,7 +232,7 @@ Example usage:
                                     # create the output file name
                                     out_file = "Y_" + haplo_close_1 + ".pdf"
                                     # plot the results on the map
-                                    map_plot(out_file, query_df, match_df, query, haplo_close_1)
+                                    map_plot(out_file, query_df, match_df, query, haplo_close_1, colors)
                                     print("\nThank you for using HaploMap! The graph has been printed to your working directory.")
                             # do not have match to the closest haplogroup
                             else:
@@ -241,7 +259,7 @@ Example usage:
                                     # create the output file name
                                     out_file = "Y_" + haplo_close_0 + ".pdf"
                                     # plot the results on the map
-                                    map_plot(out_file, query_df, match_df, query, haplo_close_0)
+                                    map_plot(out_file, query_df, match_df, query, haplo_close_0, colors)
                                     print("\nThank you for using HaploMap! The graph has been printed to your working directory.")
                                 
                                 elif (haplo_df['Y_haplogroup'].eq(haplo_close_1)).any():
@@ -253,7 +271,7 @@ Example usage:
                                     # create the output file name
                                     out_file = "Y_" + haplo_close_1 + ".pdf"
                                     # plot the results on the map
-                                    map_plot(out_file, query_df, match_df, query, haplo_close_1)
+                                    map_plot(out_file, query_df, match_df, query, haplo_close_1, colors)
                                     print("\nThank you for using HaploMap! The graph has been printed to your working directory.")
                             # do not have match to the closest haplogroup
                             else:
@@ -436,7 +454,7 @@ Example usage:
                                 out_file = "mt_" + haplo_close + ".pdf"
                                 
                                 # plot the results on the map
-                                map_plot(out_file, query_df, match_df, query, haplo_close)
+                                map_plot(out_file, query_df, match_df, query, haplo_close, colors)
                                 print("\nThank you for using HaploMap! The graph has been printed to your working directory.")
                                 
                             else: # there isn't any individual in the closest group
@@ -547,7 +565,7 @@ Example usage:
                             out_file = "mt_" + haplo_close + ".pdf"
                             
                             # plot the results on the map
-                            map_plot(out_file, query_df, match_df, query, haplo_close)
+                            map_plot(out_file, query_df, match_df, query, haplo_close, colors)
                             print("\nThank you for using HaploMap! The graph has been printed to your working directory.")
                             
                         else: # there isn't any individual in the closest group
