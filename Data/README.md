@@ -38,12 +38,15 @@ The script could be found in the `clean_data.py` in the same directory.
 This program mainly reformatted some information in the raw data `Eurasian_raw.xlsx`:  
 1) The missing values were represented as ".." in the raw data, and we corrected them into np.nan;  
 2) Some individuals did not have information on longitude and latitude, we fulfilled the geography information using their location and country;
-3) The formats for some columns (e.g. mt_haplogroup, country, Y_haplogroup) were not the same, we curated them.  
+3) The formats for some columns (e.g. mt_haplogroup, country, Y_haplogroup) were not the same, we curated them;
+4) The "Date mean in BP in years before 1950 CE [OxCal mu for a direct radiocarbon date, and average of range for a contextual date]" was renamed into "Ages_2000" and we added 50 years to each to represent the date mean in BP in years before 2000CE. And we created a new column "Ages_interval" to group the individuals into 13 groups, with each group having a 1000 years period.
 #### 3. Output for the program
 The output for `clean_data.py` would be `test_Eurasian.xlsx` in `\Data` in the repository.  
 It contains all the essential information for our tool `HaploMap.py` to execute. And the column names should be the same as `test_Eurasian.xlsx` for our tool to perform successfully.  
   
 The essential information and the strict column names are as the following:  
+"Ages_2000",
+"Age_interval",
 "Locality",  
 "Country",  
 "Lat.",  
