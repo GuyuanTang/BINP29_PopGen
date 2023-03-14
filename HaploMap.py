@@ -613,6 +613,14 @@ Example usage:
         SNP_file = SNP_dir + 'SNP_index.xlsx'
         SNP_df = pd.read_excel(SNP_file, header=0, index_col=0)
         
+        # define a color list for plotting
+        intervals = ['1001-2000 CE', '1-1000 CE', '1000-1 BCE', '2000-1001 BCE', '3000-2001 BCE', '4000-3001 BCE', '5000-4001 BCE', '6000-5001 BCE', '7000-6001 BCE', '8000-7001 BCE', '9000-8001 BCE', '10000-9001 BCE', '11000-10001 BCE']
+        color_list = ['lightcoral','brown','red','darkorange','gold','yellowgreen','limegreen','blue','violet','fuchsia','darkorchid','yellow','cyan']
+        colors = {}
+        for i in range(len(intervals)):
+            key = intervals[i]
+            colors[key] = color_list[i]
+        
         try:
             
             # to check if the mutation is included in the SNP_index
@@ -646,15 +654,18 @@ Example usage:
                     # specify the output plot's file name
                     out_plot = mut_name + '.pdf'
                     
-                    # plot the individuals on the map
+                    # plot the individuals in the defined haplogroup on the map
                     world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
-                    fig,ax=plt.subplots()
+                    fig,ax=plt.subplots(dpi=600)
                     ax.set_aspect('equal')
                     ax.xaxis.label.set_visible(False)
                     ax.yaxis.label.set_visible(False)
-                    world.plot(ax=ax)
-                    match_df.plot(ax=ax, marker='o', color='red', s=3.5, x="Long.", y="Lat.", kind="scatter", label=haplogroup)
-                    plt.legend(bbox_to_anchor=(1.0,1.0), loc=2)
+                    world.plot(ax=ax, color = 'lightgrey', edgecolor = 'darkgrey', linewidth = 0.5)
+                    grouped = match_df.groupby('Age_interval')
+                    for key, group in grouped:
+                        label_name = haplogroup + " (" + key + ")"
+                        group.plot(ax=ax, kind='scatter', x='Long.', y='Lat.', s=3.5, label=label_name, color=colors[key])
+                    plt.legend(bbox_to_anchor=(1.0,1.0), loc=2, fontsize=8)
                     plt.savefig(out_plot, format="pdf", bbox_inches='tight')
                     
                     # print the results to the report
