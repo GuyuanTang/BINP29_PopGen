@@ -4,7 +4,7 @@ Author: Guyuan Tang
 
 ## 1. Description
 HaploMap is a tool for analyzing the haplogroups on Y-chromosome and mitochondrial DNA (mtDNA) on an input dataset, which could output meaningful information for the users. It has three modes as the followings:  
-- mode 1: finding the closest haplogroup for the query and plotting the individuals (if any) belonging to both the query and closest haplogroups on the world map.  
+- mode 1: finding the closest haplogroup for the query and plotting the individuals (if any) belonging to both the query and closest haplogroups on the world map, seperated by the age intervals of the individuals.  
 - mode 2: searching for the haplogroup that was defined by the query mutation, providing mutation information, and plotting the individuals (if any) in the haplogroup on the map.  
 - mode 3: calculating the main haplogroup frequencies in a selected country.  
 
@@ -26,7 +26,7 @@ python ../HaploMap.py --mode 1 --input ../Data/test_Eurasian.xlsx
 ## 2. Installation
 To use HaploMap, just download the `HaploMap.zip` and uncompress it. Make sure to keep the `SNP_index.xlsx` in the same directory as `HaploMap.py`.  
 ### Dependencies
-Before using the `HaploMap`, the users should install three packages in their working environment: `openpyxl`=3.1.0, `geopy`, `geopandas`.  
+Before using the `HaploMap`, the users should install two packages in their working environment: `openpyxl`=3.1.0 and `geopandas`.  
 Here we provide an example for preparing the working environment by using `conda`.  
 We suggest to create a new environment to avoid some unexpected conflicts.
 ```shell
@@ -35,20 +35,21 @@ conda create -n HaploMap
 conda activate HaploMap
 # install required packages, we also provide the versions that we have tested
 conda install -c conda-forge openpyxl=3.1.0 # there is some bugs in the newer v3.1.1, and thus we recommend you to install v3.1.0!
-conda install -c conda-forge geopy=0.12.2
 conda install -c conda-forge geopands=0.12.2
 ```
+
 
 ## 3. Input Format
 If the user do not want to use our test dataset, there are some reminders on the input format.  
 The input for our tool must be an Excel file at this moment. The user could refer to the test dataset `test_Eurasian.xlsx` we provided. The column names are suggested to be the same as the test dataset.  
-The input file should have at least the following information (column names are provided next to the information): country ("Country"), longitude ("Long."), latitude ("Lat."), haplogroup on Y chromosome ("Y_haplogroup"), haplogroup on mtDNA ("mt_haplogroup").  
-Note: If your dataset only includes haplogroup on Y chromosome or on mtDNA, it is also fine. They do not need to be included in a same dataset. 
+The input file should have at least the following information (column names are provided next to the information): country ("Country"), longitude ("Long."), latitude ("Lat."), haplogroup on Y chromosome ("Y_haplogroup"), haplogroup on mtDNA ("mt_haplogroup"), age-range for each individual ("Age_interval").  
+Note: If your dataset only includes haplogroup on Y chromosome or on mtDNA, it is also fine. They do not need to be included in a same dataset.  
 
 
 ## 4. How to Use
 The following examples on how to use our tool used the `test_Eurasian.xlsx` as the input.  
-For help, type the command `HaploMap.py --help` in the terminal.
+For help, type the command `HaploMap.py --help` in the terminal. 
+When choosing the mode and specifying the input dataset, `--mode` command does not need to be before the `--input`. But make sure that `--mode` is followed by number 1, 2 or 3; while `--input` should be followed by the input dataset.  
 
 ### (1) Mode 1
 Go to the working directory where you want your outputs being stored. Here we use the `Example_output_1` as the example.  
@@ -67,17 +68,56 @@ And then follow the questions showing on the screen to input the query. There ar
 Note: in mode 1, our tool will search for the 3 top closest haplogroups of the query input by default. If there is not any individuals from the closest haplogroup in the dataset, it will search for the second closest (which is the closest one of the first closest haplogroup), and then the third closest. You could change the default value by altering the loop number `n` in the script.  
 
 Note: The search will end in these two cases: a) the search reaches the origin haplogroup (Y-Adam chromosome for Y-DNA, mt_MRCA Eve DNA for mtDNA); b) there is not any individuals from the three (by default) top closest haplogroups in the dataset.
+
 #### Output
 The output graph would be named as: chromosome + the name of the closest haplogroup + ".pdf" in PDF format. For example, the `mt_W.pdf` would be an output with the query haplogroup W1 on mtDNA.  
 
-The output would be a graph plotting the individuals from the query (if any) and the closest haplogroups. By default, the individuals are plotted in black and red, belonging to the query and the closest haplogroups, respectively. 
+The output would be a graph plotting the individuals from the query (if any) and the closest haplogroups. By default, the individuals are plotted in triangles and circles, belonging to the query and the closest haplogroups, respectively. 
 
-### (2) Mode 2
+### (2) Mode 2  
+Go to the working directory where you want your outputs being stored. Here we use the `Example_output_2` as the example.  
+```
+cd Example_output_2
+``` 
+
+To use mode 2, simply type the command in the terminal:
+```shell
+python ../Haplomap --mode 2 --input ../Data/test_Eurasian.xlsx
+```
+And then follow the questions showing on the screen to input the query. There is one question:  
+- Please enter the mutation name (Y-DNA):  
+
+Note: always make sure that the file `SNP_index.xlsx` is in the same directory as the main program.
+
 #### Output
+The outputs will include a report on the mutation (including the haplogroup it defines, build 37 number, build 38 number, mutation information, and the number of individuals belonging to that haplogroup in the dataset).  
+
+If there is not any individuals in the dataset found in the haplogroup defined by the input mutation, the output would only be a txt file reporting the mutation information.  
+If there are individuals in the dataset found in the defined haplogroup, a graph similar to mode 1 will be printed to the working directory. It shows the location of the individuals on the map and seperates them by different colors according to their age intervals.
 
 ### (3) Mode 3
+Go to the working directory where you want your outputs being stored. Here we use the `Example_output_3` as the example.  
+```
+cd Example_output_3
+``` 
+
+To use mode 3, simply type the command in the terminal:
+```shell
+python ../Haplomap --mode 3 --input ../Data/test_Eurasian.xlsx
+```
+And then follow the questions showing on the screen to input the query. There are twp questions:  
+- Please select the chromosome (Y/mt):
+- Please select a country to discover:
+
+Note: the input for country is case-sensitive, and thus be sure you have entered a correct country name. The abbreviations for countries are not accepted (for example, "UK" could not be recognized as "United Kingdom").
+
 #### Output
+The output for mode 3 would be a txt file reporting the haplogroup frequency within a country. Ages of the individuals are not considered here. And thus, this mode would be more meaningful in analyzing the haplogroup frequency on a populaiton within a short time period or the same time frame.
 
 ## 5. Limitations
+At this moment, HaploMap has some limitations:
+- Before using our tool, the users should be able to install two dependent packages which were used by our program.
+- The input file should be an excel file with the essential column names as our example dataset provided.  
+- Some default settings in the script are designed specifically for the example dataset, although they could be altered in a simple way (for example, the colors for different age intervals).
 
 ## 6. FAQs
