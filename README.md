@@ -23,7 +23,16 @@ For example, the outputs in `Example_output_1` were produced when working in tha
 python ../HaploMap.py --mode 1 --input ../Data/test_Eurasian.xlsx
 ```
 
+(4) The folder `HaploMap_download` contains the `HaploMap.zip` (containing only `HaploMap.py` and `SNP_index.xlsx`) the `HaploMap-linux.zip` and `HaploMap-windows.zip` which were both packaged with all the dependencies the program needs. This folder will provide an external link (https://drive.google.com/file/d/13uPUkTEab7o9ewD0Kahg1Nx9uitlNNux/view?usp=sharing) to google drive for you to download the chosen file.
+
 ## 2. Installation
+There are two ways of installing HaploMap: download the `HaploMap.zip` (includes the `HaploMap.py`, `SNP_index.xlsx`, `README.md`), or download the corresponding file from the `HaploMap_download` folder in the external drive based on your operating system.  
+Here we provide guidance on these two ways:
+### (1) Download the source code along with the index
+We suggest you to use this method to install HaploMap if you want to use your own dataset and you could alter some settings in the source code.  
+Or if you have already installed the dependencies (described below) in your working environment, you could use this method to avoid repeated installation of the packages.  
+Users for MacOS could also use this method.
+
 To use HaploMap, just download the `HaploMap.zip` and uncompress it. Make sure to keep the `SNP_index.xlsx` in the same directory as `HaploMap.py`.  
 ### Dependencies
 Before using the `HaploMap`, the users should install two packages in their working environment: `openpyxl`=3.1.0 and `geopandas`.  
@@ -39,6 +48,16 @@ conda install -c conda-forge geopands=0.12.2
 ```
 
 
+### (2) Download the zip file based on the operating system (Linux or Windows)
+We suggest you to use this method if you want to easily start using our tool.  
+Go to external google drive: https://drive.google.com/file/d/13uPUkTEab7o9ewD0Kahg1Nx9uitlNNux/view?usp=sharing. Here you could find the folder containing the zip files.
+Download the zip file in `HaploMap_download` based on your operating system.  
+- for Windows user: download the `HaploMap-windows.zip`, uncompress it
+- for Linux user: download the `HaploMap-linux.zip`, uncompress it  
+
+Note: if you install our tool in this way, make sure to specify the directory where you download and uncompress the zip file. By default, the script will be stored in a folder called `HaploMap`.
+
+
 ## 3. Input Format
 If the user do not want to use our test dataset, there are some reminders on the input format.  
 The input for our tool must be an Excel file at this moment. The user could refer to the test dataset `test_Eurasian.xlsx` we provided. The column names are suggested to be the same as the test dataset.  
@@ -51,15 +70,19 @@ The following examples on how to use our tool used the `test_Eurasian.xlsx` as t
 For help, type the command `HaploMap.py --help` in the terminal. 
 When choosing the mode and specifying the input dataset, `--mode` command does not need to be before the `--input`. But make sure that `--mode` is followed by number 1, 2 or 3; while `--input` should be followed by the input dataset.  
 
+Note: always be careful about the directory of the script, you need to specify it in the command line. You need to specify the directory where you uncompress the zip file, and add an additional `/HaploMap/HaploMap.py` in order to execute the program.
+
 ### (1) Mode 1
 Go to the working directory where you want your outputs being stored. Here we use the `Example_output_1` as the example.  
 ```
 cd Example_output_1
 ``` 
 
+In this case, the script is located in `../`. The directory should be altered based on where you uncompress the zip file. For example, `../HaploMap/HaploMap.py`.  
+
 To use mode 1, simply type the command in the terminal:
 ```shell
-python ../Haplomap --mode 1 --input ../Data/test_Eurasian.xlsx
+python ../HaploMap.py --mode 1 --input ../Data/test_Eurasian.xlsx
 ```
 And then follow the questions showing on the screen to input the query. There are two questions:  
 - Please select the chromosome (Y/mt):  
@@ -79,10 +102,11 @@ Go to the working directory where you want your outputs being stored. Here we us
 ```
 cd Example_output_2
 ``` 
+In this case, the script is located in `../`. The directory should be altered based on where you uncompress the zip file. For example, `../HaploMap/HaploMap.py`.  
 
 To use mode 2, simply type the command in the terminal:
 ```shell
-python ../Haplomap --mode 2 --input ../Data/test_Eurasian.xlsx
+python ../HaploMap.py --mode 2 --input ../Data/test_Eurasian.xlsx
 ```
 And then follow the questions showing on the screen to input the query. There is one question:  
 - Please enter the mutation name (Y-DNA):  
@@ -100,10 +124,11 @@ Go to the working directory where you want your outputs being stored. Here we us
 ```
 cd Example_output_3
 ``` 
+In this case, the script is located in `../`. The directory should be altered based on where you uncompress the zip file. For example, `../HaploMap/HaploMap.py`.  
 
 To use mode 3, simply type the command in the terminal:
 ```shell
-python ../Haplomap --mode 3 --input ../Data/test_Eurasian.xlsx
+python ../HaploMap.py --mode 3 --input ../Data/test_Eurasian.xlsx
 ```
 And then follow the questions showing on the screen to input the query. There are twp questions:  
 - Please select the chromosome (Y/mt):
@@ -116,8 +141,14 @@ The output for mode 3 would be a txt file reporting the haplogroup frequency wit
 
 ## 5. Limitations
 At this moment, HaploMap has some limitations:
-- Before using our tool, the users should be able to install two dependent packages which were used by our program.
+- Before using our tool, the users should be able to install two dependent packages which were used by our program. Or choose the second way to download the zip file with all the dependencies' files.
+- MacOS users may need to choose the first method to download `HaploMap.zip` and prepare the environment (we suggest conda here). 
 - The input file should be an excel file with the essential column names as our example dataset provided.  
 - Some default settings in the script are designed specifically for the example dataset, although they could be altered in a simple way (for example, the colors for different age intervals).
 
-## 6. FAQs
+## 6. Important Messages
+(1) When using command line to execute the program, make sure the directory should be specified to where the `HaploMap.py` locates.  
+(2) When not sure what to type in the command line to execute the program, take a careful look at the example above or type `python HaploMap.py --help` for help.  
+(3) If you want to use your own dataset, please refer to the `clean_data.py` in the folder `/Data` to contain essential information with the right column names in your own dataset.  
+(4) If you download the `HaploMap.zip` instead of the `HaploMap-linux.zip` or `HaploMap-windows.zip`, remember to keep the `HaploMap.py` together with the `SNP_index.xlsx` in the same directory.  
+(5) If you have any questions, we welcome you to discuss with us to improve our tool. You could email to gu5747ta-s@student.lu.se.
