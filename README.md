@@ -88,7 +88,7 @@ And then follow the questions showing on the screen to input the query. There ar
 - Please select the chromosome (Y/mt):  
 - Enter the haplogroup:  
 
-Note: in mode 1, our tool will search for the 3 top closest haplogroups of the query input by default. If there is not any individuals from the closest haplogroup in the dataset, it will search for the second closest (which is the closest one of the first closest haplogroup), and then the third closest. You could change the default value by altering the loop number `n` in the script.  
+Note: in mode 1, our tool will search for the 10 top closest haplogroups of the query input by default. If there is not any individuals from the closest haplogroup in the dataset, it will search for the second closest (which is the closest one of the first closest haplogroup), and then the third closest. You could change the default value by altering the loop number `num` in the script.  
 
 Note: The search will end in these two cases: a) the search reaches the origin haplogroup (Y-Adam chromosome for Y-DNA, mt_MRCA Eve DNA for mtDNA); b) there is not any individuals from the three (by default) top closest haplogroups in the dataset.
 

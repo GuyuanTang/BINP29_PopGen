@@ -88,7 +88,7 @@ Example usage:
     if mode == '1':
         chr_name = input("Please select the chromosome (Y/mt):")
         haplo_name = input("Enter the haplogroup:")
-        num = 3
+        num = 10
         
         
         # define a color list for plotting
