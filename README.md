@@ -50,7 +50,7 @@ conda install -c conda-forge geopands=0.12.2
 
 ### (2) Download the zip file based on the operating system (Linux or Windows)
 We suggest you to use this method if you want to easily start using our tool.  
-Go to external google drive: https://drive.google.com/file/d/13uPUkTEab7o9ewD0Kahg1Nx9uitlNNux/view?usp=sharing. Here you could find the folder containing the zip files.
+Go to external google drive: https://drive.google.com/drive/folders/1lnQ53cURAzTCOoyIUBIW3z1S-g41KrJc?usp=share_link. Here you could find the folder containing the zip files.
 Download the zip file in `HaploMap_download` based on your operating system.  
 - for Windows user: download the `HaploMap-windows.zip`, uncompress it
 - for Linux user: download the `HaploMap-linux.zip`, uncompress it  
