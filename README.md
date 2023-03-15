@@ -14,7 +14,7 @@ The main script for our tool is `HaploMap.py` in the main page, along with the e
 (1) The folder `\Data` contains: the raw dataset `Eurasian_raw.xlsx` downloaded from the BINP29 course webpage (https://canvas.education.lu.se/courses/22587/files/3514096?module_item_id=839243), a script `clean_data.py` to clean and to reformat the raw dataset, the example test dataset `test_Eurasian.xlsx` produced by the script and containing all the essential information as a suitable input for our tool.  
 To note, `clean_data.py` was designed specifically for the raw dataset `Eurasian_raw.xlsx`, but it could be refered to when the users preparing their own dataset. See more information in the `README.md` within `\Data`.  
 
-(2) The folder `\SNP_index` contains: the raw index file `SNP_Index_raw.xlsx` downloaded from the ISOGG website (https://drive.google.com/drive/folders/1lnQ53cURAzTCOoyIUBIW3z1S-g41KrJc?usp=share_link), a script `clean_SNP.py` to remove missing values and to correct the format, the data `SNP_index_1.xlsx` produced by the script and being one of the essential database for our tool to refer to.  
+(2) The folder `\SNP_index` contains: the raw index file `SNP_Index_raw.xlsx` downloaded from the ISOGG website (https://docs.google.com/spreadsheets/d/1UY26FvLE3UmEmYFiXgOy0uezJi_wOut-V5TD0a_6-bE/edit#gid=1934392066), a script `clean_SNP.py` to remove missing values and to correct the format, the data `SNP_index_1.xlsx` produced by the script and being one of the essential database for our tool to refer to.  
 To know more details, please read the `README.md` in the same folder.  
 
 (3) The folders `Example_output_*` contain the example outputs from our tool in different mode, which used the same input file `test_Eurasian.xlsx`. Our tool could be executed in different working directories, just to make sure that the `HaploMap.py` and `SNP_index.xlsx` should be in the same directory.  
@@ -23,7 +23,7 @@ For example, the outputs in `Example_output_1` were produced when working in tha
 python ../HaploMap.py --mode 1 --input ../Data/test_Eurasian.xlsx
 ```
 
-(4) The folder `HaploMap_download` contains the `HaploMap.zip` (containing only `HaploMap.py` and `SNP_index.xlsx`) the `HaploMap-linux.zip` and `HaploMap-windows.zip` which were both packaged with all the dependencies the program needs. This folder will provide an external link (https://drive.google.com/file/d/13uPUkTEab7o9ewD0Kahg1Nx9uitlNNux/view?usp=sharing) to google drive for you to download the chosen file.
+(4) The folder `HaploMap_download` contains the `HaploMap.zip` (containing only `HaploMap.py` and `SNP_index.xlsx`) the `HaploMap-linux.zip` and `HaploMap-windows.zip` which were both packaged with all the dependencies the program needs. This folder will provide an external link (https://drive.google.com/drive/folders/1lnQ53cURAzTCOoyIUBIW3z1S-g41KrJc?usp=share_link) to google drive for you to download the chosen file.
 
 ## 2. Installation
 There are two ways of installing HaploMap: download the `HaploMap.zip` (includes the `HaploMap.py`, `SNP_index.xlsx`, `README.md`), or download the corresponding file from the `HaploMap_download` folder in the external drive based on your operating system.  
@@ -147,8 +147,9 @@ At this moment, HaploMap has some limitations:
 - Some default settings in the script are designed specifically for the example dataset, although they could be altered in a simple way (for example, the colors for different age intervals).
 
 ## 6. Important Messages
-(1) When using command line to execute the program, make sure the directory should be specified to where the `HaploMap.py` locates.  
-(2) When not sure what to type in the command line to execute the program, take a careful look at the example above or type `python HaploMap.py --help` for help.  
-(3) If you want to use your own dataset, please refer to the `clean_data.py` in the folder `/Data` to contain essential information with the right column names in your own dataset.  
-(4) If you download the `HaploMap.zip` instead of the `HaploMap-linux.zip` or `HaploMap-windows.zip`, remember to keep the `HaploMap.py` together with the `SNP_index.xlsx` in the same directory.  
-(5) If you have any questions, we welcome you to discuss with us to improve our tool. You could email to gu5747ta-s@student.lu.se.
+(1) Before using the program, make sure you have activated the environment installing all the dependencies if you have installed the program by downloading the `HaploMap.zip` instead of the operating system corresponding zip file.  
+(2) When using command line to execute the program, make sure the directory should be specified to where the `HaploMap.py` locates.  
+(3) When not sure what to type in the command line to execute the program, take a careful look at the example above or type `python HaploMap.py --help` for help.  
+(4) If you want to use your own dataset, please refer to the `clean_data.py` in the folder `/Data` to contain essential information with the right column names in your own dataset.  
+(5) If you download the `HaploMap.zip` instead of the `HaploMap-linux.zip` or `HaploMap-windows.zip`, remember to keep the `HaploMap.py` together with the `SNP_index.xlsx` in the same directory.  
+(6) If you have any questions, we welcome you to discuss with us to improve our tool. You could email to gu5747ta-s@student.lu.se.
