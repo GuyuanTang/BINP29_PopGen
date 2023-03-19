@@ -5,4 +5,4 @@ GRCh37 (Build 37 number): 2659241
 GRCh38 (Build 38 number): None
 Mutation information: Not specified
 
-Found 0 individual(s) in the E:\1Lund_Lectures\BINP29_DNA_Sequencing2\PopGen\Project\BINP29_PopGen\Data\test_Eurasian.xlsx dataset.
+Found 0 individual(s) in the ../Data/test_Eurasian.xlsx dataset.
